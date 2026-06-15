@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yararohana-law.co.il/sitemap.xml
