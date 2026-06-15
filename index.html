@@ -1349,9 +1349,12 @@
         </div>
 
         <!-- Netlify Form -->
-        <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact" />
-          <p hidden><label>אל תמלא: <input name="bot-field" /></label></p>
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="18ba3925-1f76-4f90-8f3a-9cd18d16c0b0" />
+          <input type="hidden" name="subject" value="פנייה חדשה מהאתר - יארה רוחאנה" />
+          <input type="hidden" name="from_name" value="Yara Rohana Law Website" />
+          <input type="hidden" name="redirect" value="https://yararohana-law.co.il/?success=true" />
+          <input type="checkbox" name="botcheck" style="display:none" />
 
           <h3>השאירו פרטים ונחזור אליכם</h3>
           <p>נחזור אליכם בהקדם האפשרי - בדרך כלל תוך שעה.</p>
