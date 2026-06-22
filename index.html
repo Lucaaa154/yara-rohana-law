@@ -542,8 +542,22 @@
 
     .articles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+    }
+
+    /* Center the 4th card when alone on its row */
+    .articles-grid .article-card:nth-child(4):last-child {
+      grid-column: 2;
+    }
+
+    @media (max-width: 900px) {
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+      .articles-grid .article-card:nth-child(4):last-child { grid-column: auto; }
+    }
+
+    @media (max-width: 600px) {
+      .articles-grid { grid-template-columns: 1fr; }
     }
 
     .article-card {
@@ -1275,7 +1289,7 @@
             <span class="article-link-text">קרא בפייסבוק ←</span>
           </div>
         </a>
-        <a href="https://www.facebook.com/share/p/1BjEgm1zRg/?mibextid=wwXIfr" class="article-card" target="_blank" rel="noopener"></a>
+        <a href="https://www.facebook.com/share/p/1BjEgm1zRg/?mibextid=wwXIfr" class="article-card" target="_blank" rel="noopener">
           <div class="article-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
           </div>
