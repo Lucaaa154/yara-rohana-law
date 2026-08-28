@@ -568,6 +568,21 @@
       .articles-grid { grid-template-columns: 1fr; }
     }
 
+    .articles-grid .article-card[hidden] { display: none; }
+
+    .articles-more {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .articles-more button svg {
+      transition: transform 0.3s;
+    }
+
+    .articles-more button.is-open svg {
+      transform: rotate(180deg);
+    }
+
     .article-card {
       background: var(--cream);
       padding: 28px;
@@ -1264,7 +1279,7 @@
         <div class="section-divider"></div>
       </div>
 
-      <div class="articles-grid">
+      <div class="articles-grid" id="articlesGrid">
         <a href="https://www.facebook.com/share/1AoB2g9Mzx/" class="article-card" target="_blank" rel="noopener">
           <div class="article-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
@@ -1317,6 +1332,43 @@
             <span class="article-link-text">קרא בפייסבוק ←</span>
           </div>
         </a>
+        <a href="https://www.facebook.com/story.php?story_fbid=1418155100224849&amp;id=100060911173286&amp;mibextid=wwXIfr&amp;rdid=IOwcyWcktaaADh83" class="article-card" target="_blank" rel="noopener">
+          <div class="article-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
+          </div>
+          <div class="article-content">
+            <h4>צעיר מעוספיה שנחשד במעורבות באירוע ירי שוחרר בתנאים מגבילים</h4>
+            <p>בית המשפט קיבל את עמדת ההגנה.</p>
+            <span class="article-link-text">קרא בפייסבוק ←</span>
+          </div>
+        </a>
+        <a href="https://www.facebook.com/story.php?story_fbid=1413464470693912&amp;id=100060911173286&amp;mibextid=wwXIfr&amp;rdid=RSlFEezNzmvjrPEx" class="article-card" target="_blank" rel="noopener">
+          <div class="article-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
+          </div>
+          <div class="article-content">
+            <h4>שחרור תושב עוספיה שנעצר בחשד להחזקת רכוש גנוב</h4>
+            <p>עו״ד יארה רוחאנה הובילה לשחרור תושב עוספיה שנעצר בחשד להחזקת רכוש גנוב, בהם רכוש צה״ל.</p>
+            <span class="article-link-text">קרא בפייסבוק ←</span>
+          </div>
+        </a>
+        <a href="https://www.facebook.com/story.php?story_fbid=1411499974223695&amp;id=100060911173286&amp;rdid=dCG9IW1DwyMpqY8M" class="article-card" target="_blank" rel="noopener">
+          <div class="article-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z"/></svg>
+          </div>
+          <div class="article-content">
+            <h4>רימון הושלך לעסק בחדרה: גבר מדלית אל־כרמל נעצר</h4>
+            <p>עו״ד יארה רוחאנה הביאה לשחרורו.</p>
+            <span class="article-link-text">קרא בפייסבוק ←</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="articles-more">
+        <button type="button" class="btn-secondary" id="articlesToggle" aria-expanded="false" aria-controls="articlesGrid">
+          <span class="toggle-label">הצג עוד פרסומים</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -1663,5 +1715,43 @@
     });
   </script>
 
+  <script>
+    // Articles: show a limited number, reveal the rest on click
+    (function () {
+      var LIMIT = 6;
+      var grid = document.getElementById('articlesGrid');
+      var btn = document.getElementById('articlesToggle');
+      if (!grid || !btn) return;
+
+      var wrap = btn.parentNode;
+      var label = btn.querySelector('.toggle-label');
+      var extra = Array.prototype.slice.call(grid.querySelectorAll('.article-card')).slice(LIMIT);
+
+      if (!extra.length) { wrap.style.display = 'none'; return; }
+
+      var open = false;
+
+      function apply() {
+        for (var i = 0; i < extra.length; i++) extra[i].hidden = !open;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.classList.toggle('is-open', open);
+        label.textContent = open ? 'הצג פחות' : 'הצג עוד פרסומים (' + extra.length + ')';
+      }
+
+      btn.addEventListener('click', function () {
+        open = !open;
+        apply();
+        if (!open) {
+          var sec = document.getElementById('articles');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          extra[0].setAttribute('tabindex', '-1');
+          extra[0].focus({ preventScroll: true });
+        }
+      });
+
+      apply();
+    })();
+  </script>
 </body>
 </html>
